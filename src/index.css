@@ -6,3 +6,14 @@
   --color-primary-500: oklch(0.84 0.18 117.33);
   --spacing: 0.25rem;
 }
+:root {
+  --footer-bg: rgba(255, 255, 255, 0.95);
+}
+
+.dark {
+  --footer-bg: rgba(10, 10, 10, 0.95);
+}
+
+body {
+  padding-bottom: 60px; /* Prevents content from being hidden under footer */
+}

@@ -6,3 +6,7 @@
   --color-primary-500: oklch(0.84 0.18 117.33);
   --spacing: 0.25rem;
 }
+@keyframes neon-border-move {
+      0% { border-image-source: linear-gradient(120deg, #00fff7, #ff00ea, #00fff7 80%); }
+      100% { border-image-source: linear-gradient(480deg, #00fff7, #ff00ea, #00fff7 80%); }
+    }

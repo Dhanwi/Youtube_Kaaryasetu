@@ -1,5 +1,155 @@
+// "use client";
+// import { useState, useEffect } from "react";
+// import {
+// MobileNav,
+// MobileNavHeader,
+// MobileNavMenu,
+// MobileNavToggle,
+// NavbarButton,
+// NavbarLogo,
+// NavbarUI,
+// NavBody,
+// NavItems,
+// } from "./ui/adjustable-navbar.jsx";
+
+// export function Navbar() {
+//   const navItems = [
+//     {
+//       name: "Features",
+//       link: "#features",
+//     },
+//     {
+//       name: "Pricing",
+//       link: "#pricing",
+//     },
+//     {
+//       name: "Contact",
+//       link: "#contact",
+//     },
+//   ];
+//   const navItems2 = [
+//     { name: "Dashboard", link: "#dashboard" },
+//     { name: "Settings", link: "#settings" },
+//     { name: "Profile", link: "#profile" },
+//   ];
+
+// const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+//   const [visible, setVisible] = useState(false);
+//   const [isFooter, setIsFooter] = useState(false);
+//   // const navRef = useRef(null);
+
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       // if (!navRef.current) return;
+//       // const scrollY = window.scrollY;
+//       // setVisible(scrollY > 60);
+//       // // Check if at bottom of page
+//       // const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 2;
+//       // setIsFooter(atBottom);
+
+//       // Check if at bottom of page (with 50px threshold)
+//       const scrollBottom = window.innerHeight + window.scrollY;
+//       const docHeight = document.documentElement.scrollHeight;
+//       const atBottom = scrollBottom >= docHeight - 50;
+
+//       setIsFooter(atBottom);
+
+//       // Only show special navbar when not at bottom
+//       setVisible(!atBottom && window.scrollY > 60);
+//     };
+//     window.addEventListener("scroll", handleScroll);
+//     return () => window.removeEventListener("scroll", handleScroll);
+//   }, []);
+
+//   const footerItems = [
+//     { name: "Privacy", link: "#privacy" },
+//     { name: "Terms", link: "#terms" },
+//     { name: "Help", link: "#help" },
+//   ];
+
+//   // Determine which nav items to show
+//   // let currentNavItems = navItems;
+//   // if (isFooter) {
+//   //   currentNavItems = footerItems;
+//   // } else if (visible) {
+//   //   currentNavItems = navItems2;
+//   // }
+//   const currentNavItems = isFooter
+//     ? footerItems
+//     : visible
+//     ? navItems2
+//     : navItems;
+
+//   // Determine navbar position/style
+//   // const navbarClass = isFooter
+//   //   ? "fixed bottom-0 left-0 w-full z-50 bg-white border-t border-gray-200 shadow-lg"
+//   //   : "relative w-full";
+
+//   return (
+//     // <div className={navbarClass} ref={navRef}>
+//     <div>
+//       {/* <NavbarUI visible={visible} isFooter={isFooter}>
+//         // Desktop Navigation
+//         <NavBody visible={visible} isFooter={isFooter}>
+//           <NavbarLogo />
+//           <NavItems
+//             items={currentNavItems}
+//             visible={visible}
+//             isFooter={isFooter}
+//           />
+//           <div
+//             className={
+//               visible || isFooter
+//                 ? "flex flex-col gap-4 w-full"
+//                 : "flex items-center gap-4"
+//             }
+//           >
+//             <NavbarButton
+//               variant="secondary"
+//               className={visible || isFooter ? "w-full" : ""}
+//             >
+//               Login
+//             </NavbarButton>
+//             <NavbarButton
+//               variant="primary"
+//               className={visible || isFooter ? "w-full" : ""}
+//             >
+//               Book a call
+//             </NavbarButton>
+//           </div>
+//         </NavBody> */}
+//       <NavbarUI isFooter={isFooter}>
+//         {/* Desktop Navigation */}
+//         <NavBody visible={visible} isFooter={isFooter}>
+//           <NavbarLogo />
+//           <NavItems
+//             items={currentNavItems}
+//             visible={visible}
+//             isFooter={isFooter}
+//           />
+//           <div
+//             className={
+//               visible
+//                 ? "flex flex-col gap-2 w-full"
+//                 : isFooter
+//                 ? "flex gap-2"
+//                 : "flex items-center gap-3"
+//             }
+//           >
+//             <NavbarButton
+//               variant="secondary"
+//               className={visible ? "w-full" : ""}
+//             >
+//               Login
+//             </NavbarButton>
+//             <NavbarButton variant="primary" className={visible ? "w-full" : ""}>
+//               Book a call
+//             </NavbarButton>
+//           </div>
+//         </NavBody>
+
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   MobileNav,
   MobileNavHeader,
@@ -10,63 +160,94 @@ import {
   NavbarUI,
   NavBody,
   NavItems,
-} from "./ui/adjustable-navbar.jsx";
+} from "./ui/adjustable-navbar";
 
 export function Navbar() {
   const navItems = [
-    {
-      name: "Features",
-      link: "#features",
-    },
-    {
-      name: "Pricing",
-      link: "#pricing",
-    },
-    {
-      name: "Contact",
-      link: "#contact",
-    },
+    { name: "Features", link: "#features" },
+    { name: "Pricing", link: "#pricing" },
+    { name: "Contact", link: "#contact" },
   ];
-  const navItems2 = [
+
+  const dashboardItems = [
     { name: "Dashboard", link: "#dashboard" },
+    { name: "Analytics", link: "#analytics" },
     { name: "Settings", link: "#settings" },
     { name: "Profile", link: "#profile" },
   ];
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const footerItems = [
+    { name: "Privacy", link: "#privacy" },
+    { name: "Terms", link: "#terms" },
+    { name: "Help", link: "#help" },
+  ];
+
   const [visible, setVisible] = useState(false);
-  const navRef = useRef(null);
+  const [isFooter, setIsFooter] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!navRef.current) return;
       const scrollY = window.scrollY;
-      setVisible(scrollY > 60);
+      setVisible(scrollY > 100);
+
+      // Check if at bottom of page (with 50px threshold)
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 50;
+      setIsFooter(atBottom);
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Determine which nav items to show
+  const currentNavItems = isFooter
+    ? footerItems
+    : visible
+    ? dashboardItems
+    : navItems;
+
   return (
-    <div className="relative w-full" ref={navRef}>
-      <NavbarUI visible={visible}>
-        {/* Desktop Navigation */}
-        <NavBody visible={visible}>
+    <div>
+      <NavbarUI isFooter={isFooter}>
+        <NavBody visible={visible} isFooter={isFooter}>
           <NavbarLogo />
-          <NavItems items={visible ? navItems2 : navItems} visible={visible} />
+
+          <NavItems
+            items={currentNavItems}
+            visible={visible}
+            isFooter={isFooter}
+          />
+
           <div
             className={
-              visible ? "flex flex-col gap-4 w-full" : "flex items-center gap-4"
+              isFooter
+                ? "flex flex-row gap-3 w-full justify-end"
+                : visible
+                ? "flex flex-col gap-4 w-full"
+                : "flex items-center gap-4"
             }
           >
             <NavbarButton
-              variant="secondary"
-              className={visible ? "w-full" : ""}
+              variant={isFooter ? "footer-secondary" : "secondary"}
+              className={
+                visible
+                  ? "w-full "
+                  : isFooter
+                  ? "px-5 py-2"
+                  : ""
+              }
             >
               Login
             </NavbarButton>
-            <NavbarButton variant="primary" className={visible ? "w-full" : ""}>
-              Book a call
+
+            <NavbarButton
+              variant={isFooter ? "footer-primary" : "primary"}
+              className={visible ? "w-full" : isFooter ? "px-5 py-2" : ""}
+            >
+              Get Started
             </NavbarButton>
           </div>
         </NavBody>
@@ -116,6 +297,7 @@ export function Navbar() {
       </NavbarUI>
       <DummyContent />
       {/* Navbar */}
+      {/* </div> */}
     </div>
   );
 }
